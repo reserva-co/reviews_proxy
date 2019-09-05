@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <!-- <link rel="stylesheet" href="/style.css"> -->
+    <title>Reserva</title>
+    <img style="display: inline-block; height: 90%; width: 90%;" src="https://i.imgur.com/Do2r7uJ.png">
+    <style>
+        body {
+          margin: 0;
+        }
+        .container {
+          display: inline-flex;
+          flex-direction: row;
+          align-items: stretch;
+          min-width: 1270px;
+        }
+        .left-column {
+          flex-wrap: nowrap;
+          width: calc(100% - 460px);
+        }
+        .right-column {
+          flex-wrap: nowrap;
+          box-sizing: border-box;
+          width: 450px;
+          padding-right: 50px;
+        }
+        #Reservations {
+        }
+        .fixed {
+          position: fixed;
+          top: 0;
+        }
+        #Reviews {
+          font-family: 'Helvetica';
+        }
+        #Location {
+          float: left;
+          clear: both;
+          width: 100%;
+        }
+      </style>
+  </head>
+  <body style="margin: 0">
+    <div id='Photos'></div>
+    <div class='container'>
+      <div class='left-column'>
+        <img style="width: 660px; display: inline-block;" src="https:/imgur.com/439JvwL.png" />
+        <div style="margin: auto; display:flex">
+          <div id="Reviews"></div>
+        </div>
+      </div>
+      <div class='right-column'>
+        <div id="Reservations" style="display: inline-block;"></div>
+      </div>
+    </div>
+    <div id="Location"></div>
+
+<!-- These two lines are just one way to get the React library running in the client's browser -->
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/styled-components/dist/styled-components.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous">
+    </script>
+    <script src="http://localhost:3001/bundle.js"></script>
+    <script src="http://localhost:3002/main.js"></script>
+    <script src="http://localhost:3003/bundle.js"></script>
+    <script src="http://localhost:3004/bundle.js"></script>
+    <!-- see: https://reactjs.org/docs/react-without-jsx.html -->
+    <script>
+      const id = parent.document.URL.match(/[0-9]*$/);
+      ReactDOM.render(
+        React.createElement(Photos.default, { listingId: id }),
+        document.getElementById('Photos')
+      );
+      ReactDOM.render(
+        React.createElement(Location.default, { id }),
+        document.getElementById('Location')
+      );
+      ReservationsModule.default.ReactDOM.render(
+        ReservationsModule.default.React.createElement(ReservationsModule.default.ReservationsModule),
+        document.getElementById('Reservations')
+      );
+      ReactDOM.render(
+        React.createElement(Reviews.default, { id }),
+        document.getElementById('Reviews')
+      );
+
+      $(window).on('scroll', function() {
+        const bottomStop = $('body').height() - 400;
+        if ($(window).scrollTop() > 350) {
+          $('#Reservations').addClass("fixed");
+        } else {
+          $('#Reservations').removeClass("fixed");
+        }
+        if ($(window).scrollTop() > bottomStop) {
+          $('#Reservations').removeClass("fixed");
+          $('.right-column').css('align-self','flex-end');
+        } else {
+          $('.right-column').css('align-self','auto');
+        }
+      });
+    </script>
+  </body>
+</html>
